@@ -25,3 +25,17 @@ def courses(request):
         form = CourseForm()
     context = {'courses': courses, 'form': form}
     return render(request, 'courses.html', context)
+
+def details(request, student_id):
+    student = Student.objects.get(id=student_id)
+    available_courses = Course.objects.exclude(students=student)
+    
+    if request.method == 'POST':
+        course_name = request.POST.get('course')
+        if course_name:
+            course = Course.objects.get(name=course_name)
+            student.courses.add(course)
+            student.save()
+            return redirect('details', student_id=student_id)
+
+    return render(request, 'details.html', {'student': student, 'available_courses': available_courses})

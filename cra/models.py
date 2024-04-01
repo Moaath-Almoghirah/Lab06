@@ -12,7 +12,7 @@ class Course(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length=100)
-    student_id = models.IntegerField(primary_kay=True)
+    student_id = models.IntegerField(primary_key=True)
     age = models.IntegerField()
     courses = models.ManyToManyField(Course, blank=True, related_name='students')
     
